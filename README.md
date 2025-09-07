@@ -1,6 +1,6 @@
 # Nano Banana 3D Product Viewer (Images multi-angle view | not actual 3D model) for e-commerce
 
-Kaggle "Nano Banana" Hackathon by Google DeepMind: https://www.kaggle.com/competitions/banana [1](#references)
+Kaggle "Nano Banana" Hackathon by Google DeepMind: https://www.kaggle.com/competitions/banana | [1](#references)
 
 > Access to the AI Studio App will be provided after the end of submission period of the Hackathon (8 September). Stay tuned!
 
@@ -34,7 +34,7 @@ we used this sofa image for demo: [sample-sofa-image](assets/reference-photo.web
 
 6. To integrate multi-angle product image viewer for your e-commerce website, copy the code from [index.html](index.html) file and paste it into your website's HTML file. Then replace the image URLs in the code with your own generated image URLs or just replace files in "images" folder with your own images keeping the same file names (back.png, front.png, left.png, right.png, top.png, bottom.png).
 
-7. Enjoy your multi-angle product image viewer on your e-commerce website! Demo:  [View Hongqi E-QM5 Demo Example in Multi-View](https://silvermete0r.github.io/product-multi-view-integration-guide-nano-banana/) from reference images: [link](references/demo-references.rar)
+7. Enjoy your multi-angle product image viewer on your e-commerce website! Demo: [View Products in Multi-View (Interactive Mode)](https://silvermete0r.github.io/product-multi-view-integration-guide-nano-banana/) from reference images: [link](references/demo-references.rar)
 
 # My observations
 
@@ -61,11 +61,11 @@ we used this sofa image for demo: [sample-sofa-image](assets/reference-photo.web
 
 ![backpack-example](assets/backpack-example.png)
 
-# The best result 🔥
+# The best result (car) 🔥
 
 ![hongqi-example](assets/hongqi-example.png)
 
-Demo is here: [View Hongqi E-QM5 Demo Example in Multi-View (and also other products)](https://silvermete0r.github.io/product-multi-view-integration-guide-nano-banana/)
+Demo is here: [View Products in Multi-View (Interactive Mode)](https://silvermete0r.github.io/product-multi-view-integration-guide-nano-banana/)
 
 
 # References
