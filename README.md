@@ -2,8 +2,6 @@
 
 Kaggle "Nano Banana" Hackathon by Google DeepMind: https://www.kaggle.com/competitions/banana | [1](#references)
 
-> Access to the AI Studio App will be provided after the end of submission period of the Hackathon (8 September). Stay tuned!
-
 This project helps to make multi-angle product images view for e-commerce websites based on Google Gemini 2.5 Flash Image (Nano Banana), which is a state-of-the-art image generation / editing model. It can make product multi-view from the given reference image(s) of the product and optional visual effects text descriptions (not necessary). Then using ready easy-to-use JavaScript code in this GitHub repository, you can integrate multi-angle product image viewer for your e-commerce website.
 
 ## How to use
@@ -32,7 +30,7 @@ we used this sofa image for demo: [sample-sofa-image](assets/reference-photo.web
 
 ![download-zip](assets/result-files.png)
 
-6. To integrate multi-angle product image viewer for your e-commerce website, copy the code from [index.html](index.html) file and paste it into your website's HTML file. Then replace the image URLs in the code with your own generated image URLs or just replace files in "images" folder with your own images keeping the same file names (back.png, front.png, left.png, right.png, top.png, bottom.png).
+6. To integrate multi-angle product image viewer for your e-commerce website, copy the code from [multiview-block.html](multiview-block.html) file and paste it into your website's HTML file. Then replace the image URLs in the code with your own generated image URLs or just replace files in "images" folder with your own images keeping the same file names (back.png, front.png, left.png, right.png, top.png, bottom.png).
 
 7. Enjoy your multi-angle product image viewer on your e-commerce website! Demo: [View Products in Multi-View (Interactive Mode)](https://silvermete0r.github.io/product-multi-view-integration-guide-nano-banana/) from reference images: [link](references/demo-references.rar)
 
