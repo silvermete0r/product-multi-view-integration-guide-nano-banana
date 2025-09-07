@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍌</text></svg>">
+  <title>3D Product Viewer with Nano Banana</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f7;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .product-container {
+      max-width: 800px;
+      margin: 40px auto;
+    }
+
+    #product-viewer {
+      position: relative;
+      max-width: 500px;
+      aspect-ratio: 1/1;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    #product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform-style: preserve-3d;
+      transition: all 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+      backface-visibility: hidden;
+    }
+
+    .rotating-left {
+      transform: perspective(1000px) rotateY(90deg) translateX(-50%);
+      opacity: 0;
+    }
+
+    .rotating-right {
+      transform: perspective(1000px) rotateY(-90deg) translateX(50%);
+      opacity: 0;
+    }
+
+    .rotating-top {
+      transform: perspective(1000px) rotateX(-90deg) translateY(50%);
+      opacity: 0;
+    }
+
+    .rotating-bottom {
+      transform: perspective(1000px) rotateX(90deg) translateY(-50%);
+      opacity: 0;
+    }
+
+    .view-button {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .view-button:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    #view-indicator {
+      text-align: center;
+      margin-top: 20px;
+      color: #1d1d1f;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .loading #product-image {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-container">
+    <div id="product-viewer">
+      <img id="product-image" src="images/front.png" alt="Product View">
+      <button class="view-button" data-view="LEFT" style="top: 50%; left: 10px; transform: translateY(-50%);">◀</button>
+      <button class="view-button" data-view="RIGHT" style="top: 50%; right: 10px; transform: translateY(-50%);">▶</button>
+      <button class="view-button" data-view="TOP" style="top: 10px; left: 50%; transform: translateX(-50%);">▲</button>
+      <button class="view-button" data-view="BOTTOM" style="bottom: 10px; left: 50%; transform: translateX(-50%);">▼</button>
+    </div>
+    <div id="view-indicator">Front View</div>
+  </div>
+
+  <script>
+    const ProductView = {
+      FRONT: 'FRONT',
+      BACK: 'BACK',
+      LEFT: 'LEFT',
+      RIGHT: 'RIGHT',
+      TOP: 'TOP',
+      BOTTOM: 'BOTTOM'
+    };
+
+    const rotationLogic = {
+      [ProductView.FRONT]: {
+        left: ProductView.LEFT,
+        right: ProductView.RIGHT,
+        top: ProductView.TOP,
+        bottom: ProductView.BOTTOM,
+        flip: ProductView.BACK
+      },
+      [ProductView.LEFT]: {
+        left: ProductView.BACK,
+        right: ProductView.FRONT,
+        top: ProductView.TOP,
+        bottom: ProductView.BOTTOM,
+        flip: ProductView.RIGHT
+      },
+      [ProductView.RIGHT]: {
+        left: ProductView.FRONT,
+        right: ProductView.BACK,
+        top: ProductView.TOP,
+        bottom: ProductView.BOTTOM,
+        flip: ProductView.LEFT
+      },
+      [ProductView.BACK]: {
+        left: ProductView.RIGHT,
+        right: ProductView.LEFT,
+        top: ProductView.TOP,
+        bottom: ProductView.BOTTOM,
+        flip: ProductView.FRONT
+      },
+      [ProductView.TOP]: {
+        left: ProductView.LEFT,
+        right: ProductView.RIGHT,
+        top: ProductView.BACK,
+        bottom: ProductView.FRONT,
+        flip: ProductView.BOTTOM
+      },
+      [ProductView.BOTTOM]: {
+        left: ProductView.LEFT,
+        right: ProductView.RIGHT,
+        top: ProductView.FRONT,
+        bottom: ProductView.BACK,
+        flip: ProductView.TOP
+      }
+    };
+
+    const imageUrls = {
+      FRONT: 'images/front.png',
+      BACK: 'images/back.png',
+      LEFT: 'images/left.png',
+      RIGHT: 'images/right.png',
+      TOP: 'images/top.png',
+      BOTTOM: 'images/bottom.png'
+    };
+
+    let currentView = ProductView.FRONT;
+
+    function updateView(view, direction) {
+      const imageElement = document.getElementById('product-image');
+      const viewIndicator = document.getElementById('view-indicator');
+      
+      if (imageElement.classList.contains(`rotating-${direction}`)) return;
+
+      imageElement.classList.remove('rotating-left', 'rotating-right', 'rotating-top', 'rotating-bottom');
+      
+      // Force browser reflow
+      void imageElement.offsetWidth;
+      
+      imageElement.classList.add(`rotating-${direction}`);
+
+      setTimeout(() => {
+        currentView = view;
+        imageElement.src = imageUrls[view];
+        viewIndicator.textContent = `${view.charAt(0).toUpperCase() + view.slice(1).toLowerCase()} View`;
+        
+        // Force browser reflow before removing class
+        void imageElement.offsetWidth;
+        imageElement.classList.remove(`rotating-${direction}`);
+      }, 400);
+    }
+
+    document.querySelectorAll('.view-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const direction = button.dataset.view.toLowerCase();
+        const nextView = rotationLogic[currentView][direction];
+        if (nextView) {
+          // Pass the direction to updateView
+          updateView(nextView, direction);
+        }
+      });
+    });
+
+    // Preload images
+    Object.values(imageUrls).forEach(url => {
+      const img = new Image();
+      img.src = url;
+    });
+  </script>
+</body>
+</html>
