@@ -91,18 +91,133 @@
     .loading #product-image {
       opacity: 0.5;
     }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      color: #1d1d1f;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .header-button {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-button.github {
+      background: #24292e;
+    }
+
+    .header-button.gemini {
+      background: linear-gradient(135deg, #8e44ad, #3498db);
+    }
+
+    .button-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .product-selector {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .product-selector select {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      min-width: 200px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #6e6e73;
+      font-size: 12px;
+    }
+
+    .footer a {
+      color: #007AFF;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <h1>Nano Banana Product Multi-View Interactive JS Integration Demo</h1>
+    <div class="header-buttons">
+      <a href="https://github.com/silvermete0r/product-multi-view-integration-guide-nano-banana" class="header-button github" target="_blank">
+        <svg class="button-icon" viewBox="0 0 24 24" fill="white">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/>
+        </svg>
+        GitHub Repository
+      </a>
+      <a href="https://ai.studio/apps/drive/1xoQrA5WbOE9DQx7xEXXH3EsJtEQPz5gs" class="header-button gemini" target="_blank">
+        <svg class="button-icon" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2L2 19h20L12 2zm0 4l6.5 11h-13L12 6z"/>
+        </svg>
+        Generate with Gemini AI
+      </a>
+    </div>
+  </div>
+
+  <div class="product-selector">
+    <select id="product-select" onchange="changeProduct(this.value)">
+      <option value="car">Hongqi E-QM5</option>
+      <option value="backpack">Daily Backpack</option>
+      <option value="banana">Nano Banana</option>
+      <option value="lamp">Home Lamp</option>
+      <option value="cosmetics">Cosmetics Set (not uploaded yet)</option>
+      <option value="laptop">Laptop (not uploaded yet)</option>
+      <option value="phone">Smartphone (not uploaded yet)</option>
+    </select>
+  </div>
+
   <div class="product-container">
     <div id="product-viewer">
-      <img id="product-image" src="images/front.png" alt="Product View">
+      <img id="product-image" src="images/car/front.png" alt="Product View">
       <button class="view-button" data-view="LEFT" style="top: 50%; left: 10px; transform: translateY(-50%);">◀</button>
       <button class="view-button" data-view="RIGHT" style="top: 50%; right: 10px; transform: translateY(-50%);">▶</button>
       <button class="view-button" data-view="TOP" style="top: 10px; left: 50%; transform: translateX(-50%);">▲</button>
       <button class="view-button" data-view="BOTTOM" style="bottom: 10px; left: 50%; transform: translateX(-50%);">▼</button>
     </div>
     <div id="view-indicator">Front View</div>
+  </div>
+
+  <div class="footer">
+    powered by Google Gemini 2.5 Flash Image, designed by 
+    <a href="https://github.com/silvermete0r" target="_blank">@silvermete0r</a>
   </div>
 
   <script>
@@ -160,16 +275,67 @@
       }
     };
 
-    const imageUrls = {
-      FRONT: 'images/front.png',
-      BACK: 'images/back.png',
-      LEFT: 'images/left.png',
-      RIGHT: 'images/right.png',
-      TOP: 'images/top.png',
-      BOTTOM: 'images/bottom.png'
+    const products = {
+      car: {
+        FRONT: 'images/car/front.png',
+        BACK: 'images/car/back.png',
+        LEFT: 'images/car/left.png',
+        RIGHT: 'images/car/right.png',
+        TOP: 'images/car/top.png',
+        BOTTOM: 'images/car/bottom.png'
+      },
+      backpack: {
+        FRONT: 'images/backpack/front.png',
+        BACK: 'images/backpack/back.png',
+        LEFT: 'images/backpack/left.png',
+        RIGHT: 'images/backpack/right.png',
+        TOP: 'images/backpack/top.png',
+        BOTTOM: 'images/backpack/bottom.png'
+      },
+      banana: {
+        FRONT: 'images/banana/front.png',
+        BACK: 'images/banana/back.png',
+        LEFT: 'images/banana/left.png',
+        RIGHT: 'images/banana/right.png',
+        TOP: 'images/banana/top.png',
+        BOTTOM: 'images/banana/bottom.png'
+      },
+      cosmetics: {
+        FRONT: 'images/cosmetics/front.png',
+        BACK: 'images/cosmetics/back.png',
+        LEFT: 'images/cosmetics/left.png',
+        RIGHT: 'images/cosmetics/right.png',
+        TOP: 'images/cosmetics/top.png',
+        BOTTOM: 'images/cosmetics/bottom.png'
+      },
+      lamp: {
+        FRONT: 'images/lamp/front.png',
+        BACK: 'images/lamp/back.png',
+        LEFT: 'images/lamp/left.png',
+        RIGHT: 'images/lamp/right.png',
+        TOP: 'images/lamp/top.png',
+        BOTTOM: 'images/lamp/bottom.png'
+      },
+      laptop: {
+        FRONT: 'images/laptop/front.png',
+        BACK: 'images/laptop/back.png',
+        LEFT: 'images/laptop/left.png',
+        RIGHT: 'images/laptop/right.png',
+        TOP: 'images/laptop/top.png',
+        BOTTOM: 'images/laptop/bottom.png'
+      },
+      phone: {
+        FRONT: 'images/phone/front.png',
+        BACK: 'images/phone/back.png',
+        LEFT: 'images/phone/left.png',
+        RIGHT: 'images/phone/right.png',
+        TOP: 'images/phone/top.png',
+        BOTTOM: 'images/phone/bottom.png'
+      }
     };
 
     let currentView = ProductView.FRONT;
+    let imageUrls = products.car;
 
     function updateView(view, direction) {
       const imageElement = document.getElementById('product-image');
@@ -206,10 +372,30 @@
       });
     });
 
-    // Preload images
-    Object.values(imageUrls).forEach(url => {
-      const img = new Image();
-      img.src = url;
+    document.getElementById('product-select').addEventListener('change', function() {
+      const selectedProduct = this.value;
+      changeProduct(selectedProduct);
+    });
+
+    function changeProduct(productKey) {
+      imageUrls = products[productKey];
+      currentView = ProductView.FRONT;
+      updateView(ProductView.FRONT);
+    }
+
+    // Initial image loading
+    window.addEventListener('DOMContentLoaded', () => {
+      imageUrls = products.car;
+      currentView = ProductView.FRONT;
+      document.getElementById('product-image').src = imageUrls[ProductView.FRONT];
+    });
+
+    // Preload all product images
+    Object.values(products).forEach(productImages => {
+      Object.values(productImages).forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
     });
   </script>
 </body>

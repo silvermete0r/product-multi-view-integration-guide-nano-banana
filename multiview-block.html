@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Multi-View Block</title>
+</head>
+<body>
+    <!-- Multi-View Block Start -->
+    <div style="max-width: 500px; margin: 20px auto; text-align: center;">
+        <div style="position: relative; aspect-ratio: 1/1; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <img id="mv-image" src="images/car/front.png" alt="Product View" style="width: 100%; height: 100%; object-fit: contain;">
+            
+            <button onclick="rotate('left')" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 20px; cursor: pointer;">◀</button>
+            <button onclick="rotate('right')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 20px; cursor: pointer;">▶</button>
+            <button onclick="rotate('top')" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 20px; cursor: pointer;">▲</button>
+            <button onclick="rotate('bottom')" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 20px; cursor: pointer;">▼</button>
+        </div>
+        <div id="mv-indicator" style="margin-top: 10px; color: #333;">Front View</div>
+    </div>
+
+    <script>
+        // Simple rotation logic
+        const views = {
+            front: {
+                left: 'left',
+                right: 'right',
+                top: 'top',
+                bottom: 'bottom'
+            },
+            left: {
+                left: 'back',
+                right: 'front',
+                top: 'top',
+                bottom: 'bottom'
+            },
+            right: {
+                left: 'front',
+                right: 'back',
+                top: 'top',
+                bottom: 'bottom'
+            },
+            back: {
+                left: 'right',
+                right: 'left',
+                top: 'top',
+                bottom: 'bottom'
+            },
+            top: {
+                left: 'left',
+                right: 'right',
+                top: 'back',
+                bottom: 'front'
+            },
+            bottom: {
+                left: 'left',
+                right: 'right',
+                top: 'front',
+                bottom: 'back'
+            }
+        };
+
+        let currentView = 'front';
+
+        // Image paths - replace with your actual paths
+        const images = {
+            front: 'images/car/front.png',
+            back: 'images/car/back.png',
+            left: 'images/car/left.png',
+            right: 'images/car/right.png',
+            top: 'images/car/top.png',
+            bottom: 'images/car/bottom.png'
+        };
+
+        function rotate(direction) {
+            const nextView = views[currentView][direction];
+            if (nextView) {
+                currentView = nextView;
+                document.getElementById('mv-image').src = images[nextView];
+                document.getElementById('mv-indicator').textContent = 
+                    nextView.charAt(0).toUpperCase() + nextView.slice(1) + ' View';
+            }
+        }
+
+        // Preload images
+        Object.values(images).forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    </script>
+    <!-- Multi-View Block End -->
+</body>
+</html>
