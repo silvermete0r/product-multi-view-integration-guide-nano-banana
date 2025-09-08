@@ -2,6 +2,8 @@
 
 Kaggle "Nano Banana" Hackathon by Google DeepMind: https://www.kaggle.com/competitions/banana | [1](#references)
 
+> Write-up in Kaggle [Product Multi-View with Nano Banana](https://www.kaggle.com/competitions/banana/writeups/product-multi-view-with-nano-banana)!
+
 This project helps to make multi-angle product images view for e-commerce websites based on Google Gemini 2.5 Flash Image (Nano Banana), which is a state-of-the-art image generation / editing model. It can make product multi-view from the given reference image(s) of the product and optional visual effects text descriptions (not necessary). Then using ready easy-to-use JavaScript code in this GitHub repository, you can integrate multi-angle product image viewer for your e-commerce website.
 
 ## How to use
